@@ -67,7 +67,6 @@ BOX_SIZE = 10
 GRID_SIZE = 40
 SIGMA = 0.65
 
-
 class DLPModel():
     # This class represents DNN model we used in this work
     # If you just want to use the pre-trained weights that
