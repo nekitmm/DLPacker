@@ -26,7 +26,7 @@
 # SOFTWARE.
 # ==============================================================================
 
-import pickle
+import pickle5 as pickle
 import numpy as np
 
 from Bio.PDB import PDBParser, Selection, Superimposer, PDBIO, Atom, Residue, Structure
