@@ -7,6 +7,6 @@
 This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Predictiongog Amino Acid Side Chain Conformations in Proteins](pending).
 <br/>
 <p align="center">
-    <img width="70%" src="https://github.com/agemagician/ProtTrans/raw/master/images/transformers_attention.png" alt="ProtTrans Attention Visualization">
+    <img width="70%" src="https://github.com/nekitmm/DLPacker/img.png" alt="ProtTrans Attention Visualization">
 </p>
 <br/>
