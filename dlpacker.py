@@ -389,8 +389,8 @@ class DLPacker():
         return dpred
     
     def mutate_sequence(self, target:tuple, new_label:str):
-        # Takes as input residue tuple (like (10, 'B', 'PHE'))
-        # and mutates if in the sequence to new one given by new_label argument
+        # Takes as input residue tuple [like (10, 'B', 'PHE')]
+        # and mutates it in the sequence to new one given by new_label argument
         # IMPORTANT: this function just renames a residue without
         # doing anything else at all
         assert new_label in THE20,\
@@ -404,7 +404,7 @@ class DLPacker():
         return None
     
     def mutate_residue(self, target:tuple, new_label:str):
-        # this function takes as input residue tuple (like (10, 'B', 'PHE'))
+        # this function takes as input residue tuple [like (10, 'B', 'PHE')]
         # and mutates it and then runs reconstruction to build new sidechain
         residue = self.mutate_sequence(target, new_label)
         if residue: self.reconstruct_residue(residue, False)
