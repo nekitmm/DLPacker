@@ -12,8 +12,8 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 <br/>
 
 		from dlpacker import DLPacker
-		dlp = DLPacker(`your pdb structure')
-		dlp.reconstruct_protein(order = 'sequence', output_filename = pdb + '_repacked.pdb')
+		dlp = DLPacker('my_structure.pdb')
+		dlp.reconstruct_protein(order = 'sequence', output_filename = 'my_structure_repacked.pdb')
 
 **Key dependencies:**
 * Tensorflow 2.x
