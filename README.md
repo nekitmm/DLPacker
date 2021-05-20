@@ -11,8 +11,9 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 </p>
 <br/>
 
-Usage:
-as easy as three lines of code:
+<h2 align="center">Usage</h2>
+
+As easy as three lines of code:
 
 ```python
 from dlpacker import DLPacker
