@@ -7,6 +7,6 @@
 This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins](pending).
 <br/>
 <p align="center">
-    <img width="70%" src="https://github.com/nekitmm/DLPacker/blob/main/img2.png" alt="Side chain restroration example">
+    <img width="70%" src="https://github.com/nekitmm/DLPacker/blob/main/img3.png" alt="Side chain restroration example">
 </p>
 <br/>
