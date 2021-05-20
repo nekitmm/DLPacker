@@ -11,6 +11,8 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 </p>
 <br/>
 
+<center>
+
 |AA Name | SCWRL4 | Rosetta Packer | DLPacker|
 |--------|:------:|----------------|---------|
 |  Arg   |  2.07  |      1.84      |   1.44  |
@@ -31,3 +33,5 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 |  Cys   |  0.40  |      0.30      |   0.24  |
 |  Val   |  0.24  |      0.23      |   0.19  |
 |  Pro   |  0.21  |      0.19      |   0.14  |
+
+</center>
