@@ -27,7 +27,7 @@ You can find more examples with some explanations in the jupyter notebook **[DLP
 * biopython
 * pickle5
 
-<center>
+<h2 align="center">Performane</h2>
 
 |AA Name | SCWRL4 | Rosetta Packer | DLPacker|
 |:------:|:------:|:--------------:|:-------:|
@@ -49,5 +49,3 @@ You can find more examples with some explanations in the jupyter notebook **[DLP
 |  Cys   |  0.40  |      0.30      |   0.24  |
 |  Val   |  0.24  |      0.23      |   0.19  |
 |  Pro   |  0.21  |      0.19      |   0.14  |
-
-</center>
