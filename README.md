@@ -17,9 +17,7 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 * pickle5
 
 <center>
-|--------------------------------------------|
-|        |            RMSD                   |
-|--------------------------------------------|
+                      RMSD
 |AA Name | SCWRL4 | Rosetta Packer | DLPacker|
 |:------:|:------:|:--------------:|:-------:|
 |  Arg   |  2.07  |      1.84      |   1.44  |
