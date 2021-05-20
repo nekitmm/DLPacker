@@ -20,7 +20,7 @@ dlp = DLPacker('my_structure.pdb')
 dlp.reconstruct_protein(order = 'sequence', output_filename = 'my_structure_repacked.pdb')
 ```
 
-You can find more examples in the jupyter notebook **DLPacker.ipynb**
+You can find more examples with some explanations in the jupyter notebook **[DLPacker.ipynb](DLPacker.ipynb)**
 
 **Key dependencies:**
 * Tensorflow 2.x
