@@ -11,6 +11,11 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 </p>
 <br/>
 
+**Key dependencies:**
+* Tensorflow 2.x
+* biopython
+* pickle5
+
 <center>
 
 |AA Name | SCWRL4 | Rosetta Packer | DLPacker|
