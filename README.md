@@ -13,7 +13,7 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 
 <h2 align="center"><span style="color:blue">Additional files</span></h2>
 
-This repo does not contain neural network's weights and rotamer library. You can download them from [here](https://drive.google.com/file/d/1zOpEltLPpZVYWNDgrAx7mjLLMWiBwkwA/view?usp=sharing).
+This repo does not contain neural network's weights and rotamer library due to their large size. You will need to download them from [here](https://drive.google.com/file/d/1zOpEltLPpZVYWNDgrAx7mjLLMWiBwkwA/view?usp=sharing).
 
 <h2 align="center">Usage</h2>
 
