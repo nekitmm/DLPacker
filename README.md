@@ -11,6 +11,10 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 </p>
 <br/>
 
+<h2 align="center"><span style="color:blue">Additional files</span></h2>
+
+This repo does not contain neural network's weights and rotamer library. You can download them from [here](https://drive.google.com/file/d/1zOpEltLPpZVYWNDgrAx7mjLLMWiBwkwA/view?usp=sharing).
+
 <h2 align="center">Usage</h2>
 
 As easy as three lines of code:
@@ -30,7 +34,7 @@ You can find more examples with explanations in the jupyter notebook **[DLPacker
 
 <h2 align="center">Performane</h2>
 
-The table below shows validation RMSD for DLPacker as well as two other state of the art algorithms, SCWRL4 and Rosetta Packer (*fixbb*)
+The table below shows validation RMSD for DLPacker as well as two other state of the art algorithms, SCWRL4 and Rosetta Packer (*fixbb*):
 
 |AA Name | SCWRL4 | Rosetta Packer | DLPacker|
 |:------:|:------:|:--------------:|:-------:|
