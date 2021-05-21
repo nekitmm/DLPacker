@@ -34,7 +34,7 @@ You can find more examples with explanations in the jupyter notebook **[DLPacker
 
 <h2 align="center">Performane</h2>
 
-The table below shows validation RMSD for DLPacker as well as two other state of the art algorithms, SCWRL4 and Rosetta Packer (*fixbb*):
+The table below shows validation RMSD (Å) for DLPacker as well as two other state of the art algorithms, SCWRL4 and Rosetta Packer (*fixbb*):
 
 |AA Name | SCWRL4 | Rosetta Packer | DLPacker|
 |:------:|:------:|:--------------:|:-------:|
