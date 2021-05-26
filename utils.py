@@ -388,10 +388,9 @@ class DataGenerator(tf.data.Dataset):
         ds = tf.data.Dataset.range(2)
         ds = ds.interleave(lambda x: tf.data.Dataset.from_generator(
                                      cls._generator,
-                                     output_types  = (tf.float32, tf.float32, tf.float32),
-                                     output_shapes = ((grid_size, grid_size, grid_size, num_channels),\
-                                                      (grid_size, grid_size, grid_size, 4),\
-                                                      (20)),
+                                     output_signature = (tf.TensorSpec(shape = (grid_size, grid_size, grid_size, num_channels), dtype = tf.float32),\
+                                                         tf.TensorSpec(shape = (grid_size, grid_size, grid_size, 4), dtype = tf.float32),\
+                                                         tf.TensorSpec(shape = (20), dtype = tf.float32)),
                                      args = (num_channels, grid_size, randomize, folder, remove_sidechains)),
                            cycle_length = 2,
                            block_length = 1,
