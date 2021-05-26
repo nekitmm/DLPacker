@@ -56,3 +56,19 @@ The table below shows validation RMSD (Å) for DLPacker as well as two other sta
 |  Cys   |  0.40  |      0.30      |   0.24  |
 |  Val   |  0.24  |      0.23      |   0.19  |
 |  Pro   |  0.21  |      0.19      |   0.14  |
+
+<h2 align="center">Citing Our Work</h2>
+
+If you use our packege in your work, please cite the DLPacker paper:
+
+@article {Misiura2021.05.23.445347,
+	author = {Misiura, Mikita and Shroff, Raghav and Thyer, Ross and Kolomeisky, Anatoly},
+	title = {DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins},
+	elocation-id = {2021.05.23.445347},
+	year = {2021},
+	doi = {10.1101/2021.05.23.445347},
+	publisher = {Cold Spring Harbor Laboratory},
+	URL = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347},
+	eprint = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347.full.pdf},
+	journal = {bioRxiv}
+}
