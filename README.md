@@ -4,7 +4,7 @@
 
 <br/>
 
-This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins](pending).
+This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins](https://doi.org/10.1101/2021.05.23.445347).
 <br/>
 <p align="center">
     <img width="70%" src="https://github.com/nekitmm/DLPacker/blob/main/img5v3.png" alt="Side chain restroration example">
@@ -13,7 +13,7 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 
 <h2 align="center" style="color:blue">Additional files</h2>
 
-This repo does not contain neural network's weights and rotamer library due to their large size. You will need to download them from [here](https://drive.google.com/file/d/1zOpEltLPpZVYWNDgrAx7mjLLMWiBwkwA/view?usp=sharing).
+This repo does not contain neural network's weights and rotamer library due to their large size. You will need to download them from [here](https://drive.google.com/file/d/11rTpIJwaDMPm2_FgapE2F24ymfXua5lx/view?usp=sharing/view?usp=sharing).
 
 <h2 align="center">Usage</h2>
 
