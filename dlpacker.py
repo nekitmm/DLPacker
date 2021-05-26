@@ -3,8 +3,17 @@
 # This code is part of DLPacker. If you use it in your work, please cite the
 # following paper:
 # 
-# 
-# 
+# @article {Misiura2021.05.23.445347,
+#     author = {Misiura, Mikita and Shroff, Raghav and Thyer, Ross and Kolomeisky, Anatoly},
+#     title = {DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins},
+#     elocation-id = {2021.05.23.445347},
+#     year = {2021},
+#     doi = {10.1101/2021.05.23.445347},
+#     publisher = {Cold Spring Harbor Laboratory},
+#     URL = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347},
+#     eprint = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347.full.pdf},
+#     journal = {bioRxiv}
+# }
 # 
 # Licensed under the MIT License:
 # Permission is hereby granted, free of charge, to any person obtaining a copy
