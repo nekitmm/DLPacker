@@ -30,7 +30,7 @@ You can find more examples with explanations in the jupyter notebook **[DLPacker
 **Key dependencies:**
 * tensorflow 2.x
 * biopython
-* pickle5
+* pickle
 
 <h2 align="center">Performane</h2>
 
