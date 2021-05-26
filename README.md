@@ -59,7 +59,7 @@ The table below shows validation RMSD (Å) for DLPacker as well as two other sta
 
 <h2 align="center">Citing Our Work</h2>
 
-If you use our packege in your work, please cite the DLPacker paper:
+If you use our code in your work, please cite the DLPacker paper:
 
 	@article {Misiura2021.05.23.445347,
 		author = {Misiura, Mikita and Shroff, Raghav and Thyer, Ross and Kolomeisky, Anatoly},
