@@ -25,7 +25,9 @@ dlp = DLPacker('my_structure.pdb')
 dlp.reconstruct_protein(order = 'sequence', output_filename = 'my_structure_repacked.pdb')
 ```
 
-You can find more examples with explanations in the jupyter notebook **[DLPacker.ipynb](DLPacker.ipynb)**
+Input stricture might of might not contain side chains, existing side chains, if present, will be ignored.
+
+You can find more examples with explanations in the jupyter notebook **[DLPacker.ipynb](DLPacker.ipynb)**.
 
 **Key dependencies:**
 * tensorflow 2.x
