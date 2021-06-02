@@ -19,7 +19,7 @@ This repo does not contain neural network's weights and rotamer library due to t
 
 * Restore full-atom protein structure from backbone (packing)
 * Generate structures of point mutants (assumes the backbone has not changed)
-* Pack or refine parts of proteins structure (e.g. after you modelled some missing loop)
+* Pack or refine parts of proteins structure (e.g. after you modelled backbone of a missing loop)
 * Restore partially of fully missing side chains (to be implemented)
 * *probably more*
 
