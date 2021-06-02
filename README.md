@@ -24,7 +24,7 @@ This repo does not contain neural network's weights and rotamer library due to t
 * *probably more*
 
 
-Input may contain any protein/protein complex/RNA/DNA/smal molecules etc. Only water molecules are removed by default and MSE residues are renamed into MET, the rest will stay the same (except side chains of course).
+Input may contain any protein/protein complex/RNA/DNA/small molecules etc. Only water molecules are removed by default and MSE residues are renamed into MET, the rest will stay the same (except side chains of course).
 
 
 <h2 align="center">Usage</h2>
