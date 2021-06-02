@@ -15,6 +15,15 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 
 This repo does not contain neural network's weights and rotamer library due to their large size. You will need to download them from [here](https://drive.google.com/file/d/11rTpIJwaDMPm2_FgapE2F24ymfXua5lx/view?usp=sharing/view?usp=sharing).
 
+<h2 align="center">What can this code do?</h2>
+
+* Restore full-atom protein structure from backbone (packing)
+* Generate structures of point mutants (assumes the backbone has not changed)
+* Pack or refine parts of proteins structure (e.g. after you modelled some missing loop)
+* Restore partially of fully missing side chains (to be implemented)
+* *probably more*
+
+
 <h2 align="center">Usage</h2>
 
 As easy as three lines of code:
@@ -34,7 +43,7 @@ You can find more examples with explanations in the jupyter notebook **[DLPacker
 * biopython
 * pickle
 
-<h2 align="center">Performane</h2>
+<h2 align="center">Performance</h2>
 
 The table below shows validation RMSD (Å) for DLPacker as well as two other state of the art algorithms, SCWRL4 and Rosetta Packer (*fixbb*):
 
