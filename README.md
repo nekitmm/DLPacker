@@ -40,11 +40,10 @@ You can find more examples with explanations in the jupyter notebook **[DLPacker
 **Key dependencies:**
 * tensorflow 2.x
 * biopython
-* pickle
 
 <h2 align="center" style="color:blue">Additional files</h2>
 
-This repo does not contain neural network's weights due to its large size. You will need to download them from [here](https://drive.google.com/file/d/1J4fV9aAr2nssrWN8mQ7Ui-9PVQseE0LQ/view?usp=sharing).
+This repo does not contain neural network's weights due to their large size. You will need to download them from [here](https://drive.google.com/file/d/1J4fV9aAr2nssrWN8mQ7Ui-9PVQseE0LQ/view?usp=sharing).
 
 <h2 align="center">Performance</h2>
 
