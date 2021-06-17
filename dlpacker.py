@@ -35,7 +35,6 @@
 # SOFTWARE.
 # ==============================================================================
 
-import pickle5 as pickle
 import numpy as np
 
 from Bio.PDB import PDBParser, Selection, Superimposer, PDBIO, Atom, Residue, Structure
@@ -69,7 +68,7 @@ class DLPacker():
         self._read_structures()
         self.reconstructed = None
         
-        self.lib_name = './library.pkl' # library of rotamers
+        self.lib_name = './library.npz' # library of rotamers
         self._load_library()
         
         self.model = model
@@ -84,8 +83,8 @@ class DLPacker():
         # Loads library of rotamers.
         # Original library uses float16 to save space, but here we convert
         # everything to float32 to speed up calculations
-        with open(self.lib_name, 'rb') as f:
-            self.library = pickle.load(f)
+        self.library = np.load(self.lib_name, allow_pickle = True)
+        self.library = self.library['arr_0'].item()
         for k in self.library['grids']:
             self.library['grids'][k] = self.library['grids'][k].astype(np.float32)
     
