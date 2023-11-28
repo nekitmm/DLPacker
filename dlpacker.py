@@ -35,8 +35,13 @@
 # SOFTWARE.
 # ==============================================================================
 
+from os import path
+dir_path = path.dirname(path.realpath(__file__))
+DEFAULT_REFERENCE_PDB = f"{dir_path}/reference.pdb"
+DEFAULT_LIBRARY_NPZ = f"{dir_path}/library.npz"
+DEFAULT_CHARGES_RTP = f"{dir_path}/charges.rtp"
+DEFAULT_WEIGHTS = f"{dir_path}/DLPacker_weights"
 import numpy as np
-
 from Bio.PDB import PDBParser, Selection, Superimposer, PDBIO, Atom, Residue, Structure
 from utils import DLPModel, InputBoxReader, DataGenerator, THE20, SCH_ATOMS, BB_ATOMS, SIDE_CHAINS, BOX_SIZE
 
@@ -48,7 +53,11 @@ class DLPacker():
     # You might need to change this class if you
     # want to implement some new functionality
     def __init__(self, str_pdb:str, model:DLPModel = None,\
-                       input_reader:InputBoxReader = None):
+                       input_reader:InputBoxReader = None,\
+                       ref_pdb: str = DEFAULT_REFERENCE_PDB,\
+                       lib_name: str = DEFAULT_LIBRARY_NPZ,\
+                       weights_filename: str = DEFAULT_WEIGHTS,\
+                       charges_filename: str = DEFAULT_CHARGES_RTP):
         # Input:
         # str_pdb      - filename of the PDB structure we will be working with
         #                this structure might or might not contain the side
@@ -64,20 +73,20 @@ class DLPacker():
         self.altloc = ['A', 'B']  # initial altloc selection order preference
         
         self.str_pdb = str_pdb
-        self.ref_pdb = './reference.pdb' # reference atoms to align residues to
+        self.ref_pdb = ref_pdb # reference atoms to align residues to
         self._read_structures()
         self.reconstructed = None
         
-        self.lib_name = './library.npz' # library of rotamers
+        self.lib_name = lib_name # library of rotamers
         self._load_library()
         
         self.model = model
         if not self.model:
             self.model = DLPModel(width = 128, nres = 6)
-            self.model.load_model(weights = 'DLPacker_weights')
+            self.model.load_model(weights = weights_filename)
 
         self.input_reader = input_reader
-        if not self.input_reader: self.input_reader = InputBoxReader()
+        if not self.input_reader: self.input_reader = InputBoxReader(charges_filename=charges_filename)
     
     def _load_library(self):
         # Loads library of rotamers.
