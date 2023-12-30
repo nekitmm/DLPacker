@@ -6,7 +6,7 @@ build-backend = "poetry.core.masonry.api"
 name = "DLPacker"
 version = "0.0.1"
 description = "DLPacker code."
-authors = ["Mikita Misiura <yaoyy.hi@gmail.com>"]
+authors = ["Mikita Misiura <emall@address>"]
 
 readme = "README.md"
 license = "GNU"
