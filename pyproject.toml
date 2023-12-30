@@ -1,0 +1,47 @@
+[build-system]
+requires = ["poetry-core>=1.0.0,<2.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "DLPacker"
+version = "0.0.1"
+description = "DLPacker code."
+authors = ["Mikita Misiura <yaoyy.hi@gmail.com>"]
+
+readme = "README.md"
+license = "GNU"
+repository = "https://github.com/nekitmm/DLPacker"
+classifiers = [
+    "Topic :: Scientific/Engineering :: Biochemistry",
+    "Topic :: Scientific/Engineering :: Protein Engineering"
+]
+
+packages = [
+    { include = "DLPacker" },
+]
+
+[tool.poetry.dependencies]
+
+python = ">=3.9"
+biopython = ">=1.78"
+
+tensorflow = ">=2.5.0"
+
+numpy = "^1.19.2"
+
+gdown = "4.7.1"
+
+py7zr = "0.20.8"
+
+[tool.black]
+line-length = 79
+target-version = ['py38']
+skip-string-normalization = true
+
+include = '''
+/(
+  | DLPacker
+)/
+'''
+
+exclude = "DLPacker/data"
