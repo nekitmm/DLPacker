@@ -9,7 +9,7 @@ description = "DLPacker code."
 authors = ["Mikita Misiura <emall@address>"]
 
 readme = "README.md"
-license = "GNU"
+license = "MIT"
 repository = "https://github.com/nekitmm/DLPacker"
 classifiers = [
     "Topic :: Scientific/Engineering :: Biochemistry",

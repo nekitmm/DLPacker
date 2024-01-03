@@ -35,23 +35,30 @@
 # SOFTWARE.
 # ==============================================================================
 
-from os import path
+import os
 
-dir_path = path.dirname(path.realpath(__file__))
-DEFAULT_REFERENCE_PDB = path.join(dir_path, 'data', 'reference.pdb')
-DEFAULT_LIBRARY_NPZ = path.join(dir_path, 'data', 'library.npz')
-DEFAULT_CHARGES_RTP = path.join(dir_path, 'data', 'charges.rtp')
-DEFAULT_WEIGHTS = path.join(dir_path, 'data', 'DLPacker_weights')
+dir_path = os.path.dirname(os.path.realpath(__file__))
+DEFAULT_REFERENCE_PDB = os.path.join(dir_path, 'data', 'reference.pdb')
+DEFAULT_LIBRARY_NPZ = os.path.join(dir_path, 'data', 'library.npz')
+DEFAULT_CHARGES_RTP = os.path.join(dir_path, 'data', 'charges.rtp')
+
+CUSTOMIZED_WEIGHTS_DIR=os.getenv('DLPACKER_PRETRAINED_WEIGHT')
+if CUSTOMIZED_WEIGHTS_DIR:
+    if not os.path.exists(CUSTOMIZED_WEIGHTS_DIR):
+        os.makedirs(CUSTOMIZED_WEIGHTS_DIR)
+    DEFAULT_WEIGHTS = os.path.join(CUSTOMIZED_WEIGHTS_DIR, 'DLPacker_weights')
+else:
+    DEFAULT_WEIGHTS = os.path.join(dir_path, 'data', 'DLPacker_weights')
 
 DEFAULT_WEIGHTS_URL = 'https://drive.google.com/file/d/1J4fV9aAr2nssrWN8mQ7Ui-9PVQseE0LQ/view?usp=sharing'
 
-if not path.exists(f'{DEFAULT_WEIGHTS}.h5'):
+if not os.path.exists(f'{DEFAULT_WEIGHTS}.h5'):
     from DLPacker.utils import fetch_and_unzip_google_drive_link
 
     print('Downloading pretrained weight files...')
     fetch_and_unzip_google_drive_link(
         gdrive_link=DEFAULT_WEIGHTS_URL,
-        output_dir=path.dirname(DEFAULT_WEIGHTS),
+        output_dir=os.path.dirname(DEFAULT_WEIGHTS),
     )
 
 import numpy as np
