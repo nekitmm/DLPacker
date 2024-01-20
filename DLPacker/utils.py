@@ -45,13 +45,37 @@ import tensorflow.keras as K
 
 from collections import defaultdict
 
+import py7zr
 import gdown
 import os
+import glob
 import tempfile
 import traceback
 import platform
 is_arm_mac=(platform.system() == 'Darwin' and platform.machine()=='arm64')
 
+
+def unzip_weights(archive_path, output_dir):
+    """
+    Unzips the sharded weights archive file into the current directory.
+
+    """
+
+    if not os.path.exists(archive_path):
+        pattern = f"{archive_path}.???"
+        volume_files = glob.glob(pattern)
+
+        print("Found volume files: ", volume_files)
+
+        with open(archive_path, 'ab') as outfile:
+            for fname in volume_files:
+                with open(fname, 'rb') as infile:
+                    outfile.write(infile.read())
+
+        print("Created single archive file: ", archive_path)
+    
+    with py7zr.SevenZipFile(archive_path, mode='r') as z:
+            z.extractall(path=output_dir)
 
 def fetch_and_unzip_google_drive_link(gdrive_link, output_dir):
     """
@@ -77,9 +101,6 @@ def fetch_and_unzip_google_drive_link(gdrive_link, output_dir):
     # Extract the downloaded file
     extracted_files = []
     try:
-        
-        import py7zr
-
         with py7zr.SevenZipFile(output_file, mode='r') as z:
             z.extractall(path=output_dir)
             extracted_files = os.listdir(output_dir)

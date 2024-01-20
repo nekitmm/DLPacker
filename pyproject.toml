@@ -3,9 +3,9 @@ requires = ["poetry-core>=1.0.0,<2.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
-name = "DLPacker"
-version = "0.0.1"
-description = "DLPacker code."
+name = "dlpacker"
+version = "1.0.0"
+description = "DLPacker: Deep Learning based prediction of AA Side Chain Conformations"
 authors = ["Mikita Misiura <emall@address>"]
 
 readme = "README.md"
@@ -17,7 +17,7 @@ classifiers = [
 ]
 
 packages = [
-    { include = "DLPacker" },
+    { include = "dlpacker" },
 ]
 
 [tool.poetry.dependencies]
@@ -29,8 +29,6 @@ tensorflow = ">=2.5.0"
 
 numpy = "^1.19.2"
 
-gdown = "4.7.1"
-
 py7zr = "0.20.8"
 
 [tool.black]
@@ -40,8 +38,8 @@ skip-string-normalization = true
 
 include = '''
 /(
-  | DLPacker
+  | dlpacker
 )/
 '''
 
-exclude = "DLPacker/data"
+exclude = "dlpacker/data"

@@ -50,14 +50,12 @@ if CUSTOMIZED_WEIGHTS_DIR:
 else:
     DEFAULT_WEIGHTS = os.path.join(dir_path, 'data', 'DLPacker_weights')
 
-DEFAULT_WEIGHTS_URL = 'https://drive.google.com/file/d/1J4fV9aAr2nssrWN8mQ7Ui-9PVQseE0LQ/view?usp=sharing'
-
 if not os.path.exists(f'{DEFAULT_WEIGHTS}.h5'):
-    from DLPacker.utils import fetch_and_unzip_google_drive_link
+    from dlpacker.utils import unzip_weights
 
-    print('Downloading pretrained weight files...')
-    fetch_and_unzip_google_drive_link(
-        gdrive_link=DEFAULT_WEIGHTS_URL,
+    print('Unzipping pretrained weight files...')
+    unzip_weights(
+        archive_path=f'{DEFAULT_WEIGHTS}.7z',
         output_dir=os.path.dirname(DEFAULT_WEIGHTS),
     )
 
@@ -71,7 +69,7 @@ from Bio.PDB import (
     Residue,
     Structure,
 )
-from DLPacker.utils import (
+from dlpacker.utils import (
     DLPModel,
     InputBoxReader,
     DataGenerator,
