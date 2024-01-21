@@ -76,6 +76,9 @@ def unzip_weights(archive_path, output_dir):
     with py7zr.SevenZipFile(archive_path, mode='r') as z:
             z.extractall(path=output_dir)
 
+    # remove 7z archive
+    os.remove(archive_path)
+
 def fetch_and_unzip_google_drive_link(gdrive_link, output_dir):
     """
     Fetches a shared file from a Google Drive link and extracts it from 7-zip format.
