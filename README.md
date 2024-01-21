@@ -4,7 +4,6 @@
 [![PyPI version](https://badge.fury.io/py/dlpacker.svg)](https://badge.fury.io/py/dlpacker)
 
 <br/>
-<br/>
 
 This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins](https://onlinelibrary.wiley.com/doi/10.1002/prot.26311).
 <br/>
@@ -91,4 +90,4 @@ If you use our code in your work, please cite the DLPacker paper:
 	pages={1278--1290},
 	year={2022},
 	publisher={Wiley Online Library}
-}
+	}
