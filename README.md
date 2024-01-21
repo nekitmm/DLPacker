@@ -22,6 +22,9 @@ This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Pre
 
 Input may contain any protein/protein complex/RNA/DNA/small molecules etc. Only water molecules are removed by default and MSE residues are renamed into MET, the rest will stay the same (except side chains of course).
 
+<h2 align="center">Installation</h2>
+
+	pip install dlpacker
 
 <h2 align="center">Usage</h2>
 
@@ -37,13 +40,6 @@ Input stricture might or might not contain side chains, existing side chains, if
 
 You can find more examples with explanations in the jupyter notebook **[DLPacker.ipynb](DLPacker.ipynb)**.
 
-**Key dependencies:**
-* tensorflow 2.x
-* biopython
-
-<h2 align="center" style="color:blue">Additional files</h2>
-
-This repo does not contain neural network's weights due to their large size. You will need to download them from [here](https://drive.google.com/file/d/1J4fV9aAr2nssrWN8mQ7Ui-9PVQseE0LQ/view?usp=sharing).
 
 <h2 align="center">Performance</h2>
 
