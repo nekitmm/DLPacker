@@ -24,7 +24,13 @@ Input may contain any protein/protein complex/RNA/DNA/small molecules etc. Only 
 
 <h2 align="center">Installation</h2>
 
-	pip install dlpacker
+	pip install git+https://github.com/nekitmm/DLPacker
+
+Or alternatively
+
+	git clone https://github.com/nekitmm/DLPacker
+	cd DLPacker
+	pip install .
 
 <h2 align="center">Usage</h2>
 
