@@ -1,7 +1,9 @@
 <br/>
 <h1 align="center">DLPacker</h1>
-<br/>
 
+[![PyPI version](https://badge.fury.io/py/dlpacker.svg)](https://badge.fury.io/py/dlpacker)
+
+<br/>
 <br/>
 
 This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins](https://onlinelibrary.wiley.com/doi/10.1002/prot.26311).
