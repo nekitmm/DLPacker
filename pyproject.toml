@@ -12,10 +12,7 @@ readme = "README.md"
 license = "MIT"
 repository = "https://github.com/nekitmm/DLPacker"
 classifiers = [
-    "Topic :: Scientific/Engineering :: Bioinformatics",
-    "Topic :: Scientific/Engineering :: Computational Biology",
-    "Topic :: Scientific/Engineering :: Structural Bioinformatics",
-    "Topic :: Scientific/Engineering :: Biomolecular Simulations"
+    "Topic :: Scientific/Engineering :: Bio-Informatics"
 ]
 
 packages = [
