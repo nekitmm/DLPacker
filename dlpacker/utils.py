@@ -1,18 +1,17 @@
-# Copyright 2021 (c) Mikita Misiura
+# Copyright 2022 (c) Mikita Misiura
 #
 # This code is part of DLPacker. If you use it in your work, please cite the
 # following paper:
 #
-# @article {Misiura2021.05.23.445347,
-#     author = {Misiura, Mikita and Shroff, Raghav and Thyer, Ross and Kolomeisky, Anatoly},
-#     title = {DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins},
-#     elocation-id = {2021.05.23.445347},
-#     year = {2021},
-#     doi = {10.1101/2021.05.23.445347},
-#     publisher = {Cold Spring Harbor Laboratory},
-#     URL = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347},
-#     eprint = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347.full.pdf},
-#     journal = {bioRxiv}
+# @article{misiura2022dlpacker,
+#   title={DLPacker: deep learning for prediction of amino acid side chain conformations in proteins},
+#   author={Misiura, Mikita and Shroff, Raghav and Thyer, Ross and Kolomeisky, Anatoly B},
+#   journal={Proteins: Structure, Function, and Bioinformatics},
+#   volume={90},
+#   number={6},
+#   pages={1278--1290},
+#   year={2022},
+#   publisher={Wiley Online Library}
 # }
 #
 # Licensed under the MIT License:
@@ -76,6 +75,9 @@ def unzip_weights(archive_path, output_dir):
     
     with py7zr.SevenZipFile(archive_path, mode='r') as z:
             z.extractall(path=output_dir)
+
+    # remove 7z archive
+    os.remove(archive_path)
 
 def fetch_and_unzip_google_drive_link(gdrive_link, output_dir):
     """

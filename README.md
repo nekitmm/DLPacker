@@ -1,13 +1,14 @@
 <br/>
 <h1 align="center">DLPacker</h1>
-<br/>
+
+[![PyPI version](https://badge.fury.io/py/dlpacker.svg)](https://badge.fury.io/py/dlpacker)
 
 <br/>
 
-This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins](https://doi.org/10.1101/2021.05.23.445347).
+This repo contains the code from DLPacker paper [DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins](https://onlinelibrary.wiley.com/doi/10.1002/prot.26311).
 <br/>
 <p align="center">
-    <img width="70%" src="https://github.com/nekitmm/DLPacker/blob/main/img5v3.png" alt="Side chain restroration example">
+    <img width="70%" src="https://raw.githubusercontent.com/nekitmm/DLPacker/main/img5v3.png" alt="Side chain restroration example">
 </p>
 <br/>
 
@@ -24,9 +25,13 @@ Input may contain any protein/protein complex/RNA/DNA/small molecules etc. Only 
 
 <h2 align="center">Installation</h2>
 
+	pip install dlpacker
+
+Or
+
 	pip install git+https://github.com/nekitmm/DLPacker
 
-Or alternatively
+Alternatively
 
 	git clone https://github.com/nekitmm/DLPacker
 	cd DLPacker
@@ -76,14 +81,13 @@ The table below shows validation RMSD (Å) for DLPacker as well as two other sta
 
 If you use our code in your work, please cite the DLPacker paper:
 
-	@article {Misiura2021.05.23.445347,
-		author = {Misiura, Mikita and Shroff, Raghav and Thyer, Ross and Kolomeisky, Anatoly},
-		title = {DLPacker: Deep Learning for Prediction of Amino Acid Side Chain Conformations in Proteins},
-		elocation-id = {2021.05.23.445347},
-		year = {2021},
-		doi = {10.1101/2021.05.23.445347},
-		publisher = {Cold Spring Harbor Laboratory},
-		URL = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347},
-		eprint = {https://www.biorxiv.org/content/early/2021/05/25/2021.05.23.445347.full.pdf},
-		journal = {bioRxiv}
+	@article{misiura2022dlpacker,
+	title={DLPacker: deep learning for prediction of amino acid side chain conformations in proteins},
+	author={Misiura, Mikita and Shroff, Raghav and Thyer, Ross and Kolomeisky, Anatoly B},
+	journal={Proteins: Structure, Function, and Bioinformatics},
+	volume={90},
+	number={6},
+	pages={1278--1290},
+	year={2022},
+	publisher={Wiley Online Library}
 	}
