@@ -44,7 +44,7 @@ import tensorflow.keras as K
 
 from collections import defaultdict
 
-import py7zr
+from py7zr import Bad7zFile, SevenZipFile
 import gdown
 import os
 import glob
@@ -70,14 +70,27 @@ def unzip_weights(archive_path, output_dir):
             for fname in volume_files:
                 with open(fname, 'rb') as infile:
                     outfile.write(infile.read())
-
         print("Created single archive file: ", archive_path)
     
-    with py7zr.SevenZipFile(archive_path, mode='r') as z:
-            z.extractall(path=output_dir)
+    try:
+        # this should extract the archive into .h5 file
+        # print(2 + "S")
+        with SevenZipFile(archive_path, mode='r') as z:
+                z.extractall(path=output_dir)
+    except Bad7zFile as e:
+        print(f"Extraction failed: {e}")
+        print("Falling back to using 7z command line tool")
+        os.system(f"7z e {archive_path}.001 -o{output_dir}")
+    except Exception as e:
+        print(f"Extraction failed: {e}")
+        print("Could not extract the weights archive using 7z command line tool. Please make sure it is installed and available in the PATH.")
+        print("You should probably be able to install 7z by running `sudo apt install p7zip-full`")
 
     # remove 7z archive
     os.remove(archive_path)
+
+    print("Extracted weights to: ", output_dir)
+    print("Successfully extracted weights! (this is only done once)")
 
 def fetch_and_unzip_google_drive_link(gdrive_link, output_dir):
     """
