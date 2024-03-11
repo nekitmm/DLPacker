@@ -74,7 +74,6 @@ def unzip_weights(archive_path, output_dir):
     
     try:
         # this should extract the archive into .h5 file
-        # print(2 + "S")
         with SevenZipFile(archive_path, mode='r') as z:
                 z.extractall(path=output_dir)
     except Bad7zFile as e:
