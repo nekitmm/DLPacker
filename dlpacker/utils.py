@@ -115,7 +115,7 @@ def fetch_and_unzip_google_drive_link(gdrive_link, output_dir):
     # Extract the downloaded file
     extracted_files = []
     try:
-        with py7zr.SevenZipFile(output_file, mode='r') as z:
+        with SevenZipFile(output_file, mode='r') as z:
             z.extractall(path=output_dir)
             extracted_files = os.listdir(output_dir)
             print(f'Extracted files: {extracted_files}')
