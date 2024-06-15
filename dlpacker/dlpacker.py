@@ -36,28 +36,6 @@
 
 import os
 
-dir_path = os.path.dirname(os.path.realpath(__file__))
-DEFAULT_REFERENCE_PDB = os.path.join(dir_path, 'data', 'reference.pdb')
-DEFAULT_LIBRARY_NPZ = os.path.join(dir_path, 'data', 'library.npz')
-DEFAULT_CHARGES_RTP = os.path.join(dir_path, 'data', 'charges.rtp')
-
-CUSTOMIZED_WEIGHTS_DIR=os.getenv('DLPACKER_PRETRAINED_WEIGHT')
-if CUSTOMIZED_WEIGHTS_DIR:
-    if not os.path.exists(CUSTOMIZED_WEIGHTS_DIR):
-        os.makedirs(CUSTOMIZED_WEIGHTS_DIR)
-    DEFAULT_WEIGHTS = os.path.join(CUSTOMIZED_WEIGHTS_DIR, 'DLPacker_weights')
-else:
-    DEFAULT_WEIGHTS = os.path.join(dir_path, 'data', 'DLPacker_weights')
-
-if not os.path.exists(f'{DEFAULT_WEIGHTS}.h5'):
-    from dlpacker.utils import unzip_weights
-
-    print('Unzipping pretrained weight files...')
-    unzip_weights(
-        archive_path=f'{DEFAULT_WEIGHTS}.7z',
-        output_dir=os.path.dirname(DEFAULT_WEIGHTS),
-    )
-
 import numpy as np
 from Bio.PDB import (
     PDBParser,
@@ -68,16 +46,40 @@ from Bio.PDB import (
     Residue,
     Structure,
 )
+
 from dlpacker.utils import (
     DLPModel,
     InputBoxReader,
-    DataGenerator,
     THE20,
     SCH_ATOMS,
     BB_ATOMS,
     SIDE_CHAINS,
     BOX_SIZE,
 )
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+DEFAULT_REFERENCE_PDB = os.path.join(dir_path, 'data', 'reference.pdb')
+DEFAULT_LIBRARY_NPZ = os.path.join(dir_path, 'data', 'library.npz')
+DEFAULT_CHARGES_RTP = os.path.join(dir_path, 'data', 'charges.rtp')
+
+
+CUSTOMIZED_WEIGHTS_DIR = os.getenv('DLPACKER_PRETRAINED_WEIGHT')
+if CUSTOMIZED_WEIGHTS_DIR:
+    if not os.path.exists(CUSTOMIZED_WEIGHTS_DIR):
+        os.makedirs(CUSTOMIZED_WEIGHTS_DIR)
+    DEFAULT_WEIGHTS = os.path.join(CUSTOMIZED_WEIGHTS_DIR, 'DLPacker_weights')
+else:
+    DEFAULT_WEIGHTS = os.path.join(dir_path, 'data', 'DLPacker_weights')
+
+
+if not os.path.exists(f'{DEFAULT_WEIGHTS}.h5'):
+    from dlpacker.utils import unzip_weights
+
+    print('Unzipping pretrained weight files...')
+    unzip_weights(
+        archive_path=f'{DEFAULT_WEIGHTS}.7z',
+        output_dir=os.path.dirname(DEFAULT_WEIGHTS),
+    )
 
 
 class DLPacker:
@@ -126,9 +128,7 @@ class DLPacker:
 
         self.input_reader = input_reader
         if not self.input_reader:
-            self.input_reader = InputBoxReader(
-                charges_filename=charges_filename
-            )
+            self.input_reader = InputBoxReader(charges_filename=charges_filename)
 
     def _load_library(self):
         # Loads library of rotamers.
@@ -137,9 +137,7 @@ class DLPacker:
         self.library = np.load(self.lib_name, allow_pickle=True)
         self.library = self.library['arr_0'].item()
         for k in self.library['grids']:
-            self.library['grids'][k] = self.library['grids'][k].astype(
-                np.float32
-            )
+            self.library['grids'][k] = self.library['grids'][k].astype(np.float32)
 
     def _read_structures(self):
         # Reads in main PDB structure and reference structure.
@@ -218,13 +216,9 @@ class DLPacker:
                     disordered_list.append(atom)
                     # sometimes one of the altlocs just does not exist!
                     try:
-                        selected_list.append(
-                            atom.disordered_get(self.altloc[0])
-                        )
+                        selected_list.append(atom.disordered_get(self.altloc[0]))
                     except:
-                        selected_list.append(
-                            atom.disordered_get(self.altloc[1])
-                        )
+                        selected_list.append(atom.disordered_get(self.altloc[1]))
                     selected_list[-1].set_altloc(' ')
                     selected_list[-1].disordered_flag = 0
 
@@ -249,11 +243,7 @@ class DLPacker:
         # In order to generate input box properly
         # we first need to align selected residue
         # to reference atoms from reference.pdb
-        if (
-            not residue.has_id('N')
-            or not residue.has_id('C')
-            or not residue.has_id('CA')
-        ):
+        if not residue.has_id('N') or not residue.has_id('C') or not residue.has_id('CA'):
             print(
                 'Missing backbone atoms: residue',
                 self._get_residue_tuple(residue),
@@ -265,9 +255,7 @@ class DLPacker:
         self.sup.apply(self._get_parent_structure(residue))
         return True
 
-    def _align_structures(
-        self, structure_a: Structure, structure_b: Structure
-    ):
+    def _align_structures(self, structure_a: Structure, structure_b: Structure):
         # Aligns two structures using backbone atoms
         bb_a, bb_b = [], []
         residues_a = Selection.unfold_entities(structure_a, 'R')
@@ -297,20 +285,11 @@ class DLPacker:
         b = self.box_size + 1  # one angstrom offset to include more atoms
         for a in self._get_parent_structure(residue).get_atoms():
             xyz = a.coord
-            if (
-                xyz[0] < b
-                and xyz[0] > -b
-                and xyz[1] < b
-                and xyz[1] > -b
-                and xyz[2] < b
-                and xyz[2] > -b
-            ):
+            if xyz[0] < b and xyz[0] > -b and xyz[1] < b and xyz[1] > -b and xyz[2] < b and xyz[2] > -b:
                 atoms.append(a)
         return atoms
 
-    def _genetare_input_box(
-        self, residue: Residue, allow_missing_atoms: bool = False
-    ):
+    def _genetare_input_box(self, residue: Residue, allow_missing_atoms: bool = False):
         # Takes a residue and generates a special
         # dictionary that is then given to InputReader,
         # which uses this dictionary to generate the actual input
@@ -400,25 +379,16 @@ class DLPacker:
             for residue in Selection.unfold_entities(structure, 'R'):
                 if not targets or self._get_residue_tuple(residue) in targets:
                     if residue.get_resname() in THE20:
-                        if (
-                            residue.has_id('CA')
-                            and residue.has_id('C')
-                            and residue.has_id('N')
-                        ):
+                        if residue.has_id('CA') and residue.has_id('C') and residue.has_id('N'):
                             atoms = self._get_box_atoms(residue)
                             tuples.append((residue, len(atoms)))
             tuples.sort(key=lambda x: -x[1])
 
         elif method == 'score':
             tuples = []
-            for i, residue in enumerate(
-                Selection.unfold_entities(structure, 'R')
-            ):
+            for i, residue in enumerate(Selection.unfold_entities(structure, 'R')):
                 if not targets or self._get_residue_tuple(residue) in targets:
-                    if (
-                        residue.get_resname() in THE20
-                        and residue.get_resname() != 'GLY'
-                    ):
+                    if residue.get_resname() in THE20 and residue.get_resname() != 'GLY':
                         name = self._get_residue_tuple(residue)
                         print("Scoring residue:", i, name, end='\r')
 
@@ -426,16 +396,12 @@ class DLPacker:
                         box = self._genetare_input_box(residue, True)
 
                         if not box:
-                            print(
-                                "\nSkipping residue:", i, residue.get_resname()
-                            )
+                            print("\nSkipping residue:", i, residue.get_resname())
                             continue
 
                         pred = self._get_prediction(box, n)
                         scores = np.abs(self.library['grids'][n] - pred)
-                        scores = np.mean(
-                            scores, axis=tuple(range(1, pred.ndim + 1))
-                        )
+                        scores = np.mean(scores, axis=tuple(range(1, pred.ndim + 1)))
                         best_ind = np.argmin(scores)
                         best_score = np.min(scores)
                         tuples.append((residue, best_score / SCH_ATOMS[n]))
@@ -512,9 +478,7 @@ class DLPacker:
         # and mutates it in the sequence to new one given by new_label argument
         # IMPORTANT: this function just renames a residue without
         # doing anything else at all
-        assert (
-            new_label in THE20
-        ), 'Only mutations to canonical 20 amino acids are supported!'
+        assert new_label in THE20, 'Only mutations to canonical 20 amino acids are supported!'
         for residue in Selection.unfold_entities(self.structure, 'R'):
             if target == self._get_residue_tuple(residue):
                 residue.resname = new_label
@@ -558,9 +522,7 @@ class DLPacker:
                 residue[name].coord = best_match[i]
             else:
                 # most values are dummy here
-                new_atom = Atom.Atom(
-                    name, best_match[i], 0, 1, ' ', name, 2, element=name[:1]
-                )
+                new_atom = Atom.Atom(name, best_match[i], 0, 1, ' ', name, 2, element=name[:1])
                 residue.add(new_atom)
 
     def reconstruct_protein(
@@ -587,21 +549,14 @@ class DLPacker:
         if not self.reconstructed:
             self.reconstructed = self.structure.copy()
         else:
-            print(
-                'Reconstructed structure already exists, something might be wrong!'
-            )
+            print('Reconstructed structure already exists, something might be wrong!')
         if not refine_only:
             self._remove_sidechains(self.reconstructed)
 
         # run reconstruction for all residues in selected order
-        sorted_residues = self._get_sorted_residues(
-            self.reconstructed, method=order
-        )
+        sorted_residues = self._get_sorted_residues(self.reconstructed, method=order)
         for i, residue in enumerate(sorted_residues):
-            if (
-                residue.get_resname() in THE20
-                and residue.get_resname() != 'GLY'
-            ):
+            if residue.get_resname() in THE20 and residue.get_resname() != 'GLY':
                 name = self._get_residue_tuple(residue)
                 print("Working on residue:", i, name, end='\r')
                 self.reconstruct_residue(residue, refine_only)
@@ -636,9 +591,7 @@ class DLPacker:
         if not self.reconstructed:
             self.reconstructed = self.structure.copy()
         else:
-            print(
-                'Reconstructed structure already exists, something might be wrong!'
-            )
+            print('Reconstructed structure already exists, something might be wrong!')
 
         # remove side chains for target amino acids is refine_only is False
         if not refine_only:
@@ -647,15 +600,10 @@ class DLPacker:
                     self._remove_sidechain(residue)
 
         # run reconstruction for specified list of residues
-        sorted_residues = self._get_sorted_residues(
-            self.reconstructed, targets, method=order
-        )
+        sorted_residues = self._get_sorted_residues(self.reconstructed, targets, method=order)
         for i, residue in enumerate(sorted_residues):
             if self._get_residue_tuple(residue) in targets:
-                if (
-                    residue.get_resname() in THE20
-                    and residue.get_resname() != 'GLY'
-                ):
+                if residue.get_resname() in THE20 and residue.get_resname() != 'GLY':
                     name = self._get_residue_tuple(residue)
                     print("Working on residue:", i, name, end='\r')
                     self.reconstruct_residue(residue, refine_only)
