@@ -21,10 +21,10 @@ packages = [
 
 [tool.poetry.dependencies]
 
-python = ">=3.9"
+python = ">=3.8"
 biopython = ">=1.78"
 
-tensorflow = ">=2.5.0"
+tensorflow = ">=2.5.0, <2.16.0"
 
 numpy = "^1.19.2"
 

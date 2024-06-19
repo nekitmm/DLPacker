@@ -35,7 +35,10 @@
 # ==============================================================================
 
 
-import time, os, re
+import time
+import os
+import re
+import subprocess
 
 import numpy as np
 
@@ -45,13 +48,10 @@ import tensorflow.keras as K
 from collections import defaultdict
 
 from py7zr import Bad7zFile, SevenZipFile
-import gdown
-import os
 import glob
-import tempfile
-import traceback
 import platform
-is_arm_mac=(platform.system() == 'Darwin' and platform.machine()=='arm64')
+
+is_arm_mac = platform.system() == 'Darwin' and platform.machine() == 'arm64'
 
 
 def unzip_weights(archive_path, output_dir):
@@ -71,63 +71,29 @@ def unzip_weights(archive_path, output_dir):
                 with open(fname, 'rb') as infile:
                     outfile.write(infile.read())
         print("Created single archive file: ", archive_path)
-    
+
     try:
         # this should extract the archive into .h5 file
         with SevenZipFile(archive_path, mode='r') as z:
-                z.extractall(path=output_dir)
+            z.extractall(path=output_dir)
     except Bad7zFile as e:
         print(f"Extraction failed: {e}")
         print("Falling back to using 7z command line tool")
-        os.system(f"7z e {archive_path}.001 -o{output_dir}")
-    except Exception as e:
-        print(f"Extraction failed: {e}")
-        print("Could not extract the weights archive using 7z command line tool. Please make sure it is installed and available in the PATH.")
-        print("You should probably be able to install 7z by running `sudo apt install p7zip-full`")
+        if os.system(f"7z e {archive_path}.001 -o{output_dir}") != 0:
+            print(
+                "Could not extract the weights archive using 7z command line tool. "
+                "Please make sure it is installed and available in the PATH."
+            )
+            print("You should probably be able to install 7z by running `sudo apt install p7zip-full`")
 
-    # remove 7z archive
-    os.remove(archive_path)
+    if os.path.exists(archive_path) and os.path.exists(archive_path[:-2] + "h5"):
+        # remove 7z archive
+        os.remove(archive_path)
 
-    print("Extracted weights to: ", output_dir)
-    print("Successfully extracted weights! (this is only done once)")
-
-def fetch_and_unzip_google_drive_link(gdrive_link, output_dir):
-    """
-    Fetches a shared file from a Google Drive link and extracts it from 7-zip format.
-
-    Args:
-    - gdrive_link (str): The Google Drive sharing link of the file.
-    - output_dir (str): The directory where the file will be saved and extracted.
-
-    Returns:
-    - extracted_files (list): List of extracted files if successful, else empty list.
-    """
-    # Create output directory if it doesn't exist
-    os.makedirs(output_dir, exist_ok=True)
-
-    output_file = tempfile.mktemp(suffix=".7z")
-
-    gdown.download(
-        url=gdrive_link, output=output_file, quiet=False, fuzzy=True
-    )
-
-
-    # Extract the downloaded file
-    extracted_files = []
-    try:
-        with SevenZipFile(output_file, mode='r') as z:
-            z.extractall(path=output_dir)
-            extracted_files = os.listdir(output_dir)
-            print(f'Extracted files: {extracted_files}')
-    except Exception:
-        print(f"Extraction failed: ")
-        traceback.print_exc()
-
-    finally:
-        os.remove(output_file)
-        pass
-
-    return extracted_files
+        print("Extracted weights to: ", output_dir)
+        print("Successfully extracted weights! (this is only done once)")
+    else:
+        print("Failed to extract weights, see errors above!")
 
 
 # do not change any of these
@@ -243,11 +209,7 @@ class DLPModel:
         self.ema = 0.999  # for loss history smoothing
 
     def __str__(self):
-        print(
-            '3D CNN Model\nLR: {}, BATCH SIZE: {}\n'.format(
-                self.lr, self.batch_size
-            )
-        )
+        print('3D CNN Model\nLR: {}, BATCH SIZE: {}\n'.format(self.lr, self.batch_size))
         self.model.summary(line_length=110)
         return 'lol'
 
@@ -276,9 +238,7 @@ class DLPModel:
                     l = self.loss(x[..., :4], y, labels, out)
 
                     grads = tape.gradient(l, self.model.trainable_variables)
-                    self.optimizer.apply_gradients(
-                        zip(grads, self.model.trainable_variables)
-                    )
+                    self.optimizer.apply_gradients(zip(grads, self.model.trainable_variables))
                 end = time.time()
 
                 print(
@@ -323,15 +283,9 @@ class DLPModel:
         roi = tf.reduce_mean(tf.math.abs(y - out) * mask) * 100
 
         if self.loss_history['mae']:
-            mae_ema = (
-                mae.numpy() * (1 - self.ema)
-                + self.ema * self.loss_history['mae'][-1]
-            )
+            mae_ema = mae.numpy() * (1 - self.ema) + self.ema * self.loss_history['mae'][-1]
             self.loss_history['mae'].append(mae_ema)
-            roi_ema = (
-                roi.numpy() * (1 - self.ema)
-                + self.ema * self.loss_history['roi'][-1]
-            )
+            roi_ema = roi.numpy() * (1 - self.ema) + self.ema * self.loss_history['roi'][-1]
             self.loss_history['roi'].append(roi_ema)
         else:
             self.loss_history['mae'].append(mae.numpy())
@@ -351,36 +305,22 @@ class DLPModel:
         )
         labels = K.layers.Input(shape=(20,))
 
-        fc = K.layers.Dense(
-            self.grid_size * self.grid_size * self.grid_size, activation='relu'
-        )(labels)
-        fc = tf.reshape(
-            fc, shape=(-1, self.grid_size, self.grid_size, self.grid_size, 1)
-        )
+        fc = K.layers.Dense(self.grid_size * self.grid_size * self.grid_size, activation='relu')(labels)
+        fc = tf.reshape(fc, shape=(-1, self.grid_size, self.grid_size, self.grid_size, 1))
 
         l0 = K.layers.Concatenate(axis=-1)([inp, fc])
 
         def res_identity(x, f1, f2):
             x_in = x
-            x = K.layers.Conv3D(
-                f1, 1, strides=1, padding='valid', activation='relu'
-            )(x)
-            x = K.layers.Conv3D(
-                f1, 3, strides=1, padding='same', activation='relu'
-            )(x)
+            x = K.layers.Conv3D(f1, 1, strides=1, padding='valid', activation='relu')(x)
+            x = K.layers.Conv3D(f1, 3, strides=1, padding='same', activation='relu')(x)
             x = K.layers.Conv3D(f2, 1, strides=1, padding='valid')(x)
             x = K.layers.Add()([x, x_in])
             return K.layers.Activation('relu')(x)
 
-        l1 = K.layers.Conv3D(
-            1 * width, 3, padding='same', strides=2, activation='relu'
-        )(l0)
-        l2 = K.layers.Conv3D(
-            2 * width, 3, padding='same', strides=2, activation='relu'
-        )(l1)
-        l3 = K.layers.Conv3D(
-            4 * width, 3, padding='same', strides=1, activation='relu'
-        )(l2)
+        l1 = K.layers.Conv3D(1 * width, 3, padding='same', strides=2, activation='relu')(l0)
+        l2 = K.layers.Conv3D(2 * width, 3, padding='same', strides=2, activation='relu')(l1)
+        l3 = K.layers.Conv3D(4 * width, 3, padding='same', strides=1, activation='relu')(l2)
 
         for _ in range(self.nres):
             l3 = res_identity(l3, 2 * width, 4 * width)
@@ -442,9 +382,7 @@ class InputBoxReader:
         ]
 
         # defining a kernel
-        kernel = np.exp(
-            -np.sum(self.grid * self.grid, axis=0) / SIGMA**2 / 2
-        )
+        kernel = np.exp(-np.sum(self.grid * self.grid, axis=0) / SIGMA**2 / 2)
         kernel /= np.sqrt(2 * np.pi) * SIGMA
         self.kernel = kernel[1:-1, 1:-1, 1:-1]
         self.norm = np.sum(self.kernel)
@@ -479,9 +417,7 @@ class InputBoxReader:
             # and 50% chance to remove random fraction of them
             if np.random.rand() < 0.25:
                 p = np.random.rand()
-                amino_acids = set(
-                    [a for a in amino_acids if np.random.rand() < p]
-                )
+                amino_acids = set([a for a in amino_acids if np.random.rand() < p])
             else:
                 amino_acids = set()
         elif self.remove_sidechains == 'all':
@@ -546,9 +482,7 @@ class InputBoxReader:
                     if aa in self.charges:
                         # if charge value is known, use it
                         charge = kernel * self.charges[aa][an]
-                        x[xa:xb, ya:yb, za:zb, 5] += (
-                            kernel * self.charges[aa][an]
-                        )
+                        x[xa:xb, ya:yb, za:zb, 5] += kernel * self.charges[aa][an]
                     else:
                         # otherwise use default values
                         charge = kernel * self.charges['RST'][an[:1]]
