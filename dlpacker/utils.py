@@ -308,7 +308,6 @@ class DLPModel:
             def __init__(self, grid_size):
                 super(Reshape, self).__init__()
                 self.grid_size = grid_size
-                print("Running Reshape")
 
             def call(self, x):
                 return tf.reshape(x, shape=(-1, self.grid_size, self.grid_size, self.grid_size, 1))

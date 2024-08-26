@@ -23,11 +23,8 @@ packages = [
 
 python = ">=3.8"
 biopython = ">=1.78"
-
 tensorflow = ">=2.5.0, <2.16.0"
-
 numpy = "^1.19.2"
-
 py7zr = "0.20.8"
 
 [tool.black]
