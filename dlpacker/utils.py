@@ -38,7 +38,6 @@
 import time
 import os
 import re
-import subprocess
 
 import numpy as np
 
@@ -305,8 +304,17 @@ class DLPModel:
         )
         labels = K.layers.Input(shape=(20,))
 
+        class Reshape(K.layers.Layer):
+            def __init__(self, grid_size):
+                super(Reshape, self).__init__()
+                self.grid_size = grid_size
+                print("Running Reshape")
+
+            def call(self, x):
+                return tf.reshape(x, shape=(-1, self.grid_size, self.grid_size, self.grid_size, 1))
+
         fc = K.layers.Dense(self.grid_size * self.grid_size * self.grid_size, activation='relu')(labels)
-        fc = tf.reshape(fc, shape=(-1, self.grid_size, self.grid_size, self.grid_size, 1))
+        fc = Reshape(self.grid_size)(fc)
 
         l0 = K.layers.Concatenate(axis=-1)([inp, fc])
 
@@ -392,8 +400,8 @@ class InputBoxReader:
         with open(charges_filename, 'r') as f:
             for line in f:
                 if line[0] == '[' or line[0] == ' ':
-                    if re.match('\A\[ .{1,3} \]\Z', line[:-1]):
-                        key = re.match('\A\[ (.{1,3}) \]\Z', line[:-1])[1]
+                    if re.match(r'\A\[ .{1,3} \]\Z', line[:-1]):
+                        key = re.match(r'\A\[ (.{1,3}) \]\Z', line[:-1])[1]
                         self.charges[key] = defaultdict(lambda: 0)
                     else:
                         l = re.split(r' +', line[:-1])
