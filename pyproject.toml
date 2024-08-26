@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "dlpacker"
-version = "1.0.2"
+version = "1.0.3"
 description = "DLPacker: Deep Learning-based prediction of amino acid side chain conformations in proteins"
 authors = ["Mikita Misiura <mikita.misiura@gmail.com>"]
 
